@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Page - HolisticWell360</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span class="material-icons">menu</span>
+        </div>
+    </header>
+
+    <!-- Settings Menu -->
+    <nav id="settings-menu" class="settings-menu">
+        <ul>
+            <li>
+                <span class="material-icons">account_circle</span>
+                <a href="#">Account</a>
+            </li>
+            <li>
+                <span class="material-icons">subscriptions</span>
+                <a href="statistic.html">My Subscription</a>
+            </li>
+            <li>
+                <span class="material-icons">settings</span>
+                <a href="onboarding.html">General</a>
+            </li>
+            <li>
+                <span class="material-icons">lock</span>
+                <a href="#">Privacy</a>
+            </li>
+            <li>
+                <span class="material-icons">notifications</span>
+                <a href="notification.html">Notifications</a>
+            </li>
+            <li>
+                <span class="material-icons">insights</span>
+                <a href="#">Insights</a>
+            </li>
+            <li>
+                <span class="material-icons">analytics</span>
+                <a href="dashboard.html">Analytics</a>
+            </li>
+            <li>
+                <span class="material-icons">support</span>
+                <a href="#">Support</a>
+            </li>
+            <li>
+                <span class="material-icons">exit_to_app</span>
+                <a href="#">Sign Out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <img src="m.jpeg" alt="Logo" class="logo">
+                <div class="header-text">
+                    <p>Personalized insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Data Section -->
+        <div class="real-time-data">
+            <div class="data-item">
+                <i class="material-icons">directions_run</i>
+                <div class="data-text">
+                    <h2>100</h2>
+                    <p>Total activities</p>
+                </div>
+            </div>
+            <div class="data-item">
+                <i class="material-icons">local_fire_department</i>
+                <div class="data-text">
+                    <h2>10,000</h2>
+                    <p>Calories burned</p>
+                </div>
+            </div>
+            <div class="data-item">
+                <i class="material-icons">star</i>
+                <div class="data-text">
+                    <h2>10</h2>
+                    <p>Achievements unlocked</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscription Section -->
+        <div class="subscription">
+            <h3>Subscription Plan</h3>
+            <div class="subscription-plan">
+                <div class="plan-name">Free Plan</div>
+                <p>Access limited features</p>
+            </div>
+
+            <!-- Monthly Plan -->
+            <div class="subscription-plan">
+                <div class="plan-name">Monthly Plan</div>
+                <p>Full access for $9.99 per month</p>
+            </div>
+
+            <!-- Yearly Plan -->
+            <div class="subscription-plan">
+                <div class="plan-name">Annual Plan</div>
+                <p>Full access for $99.99 per year</p>
+            </div>
+
+            <button class="upgrade-btn">Upgrade to Premium</button>
+        </div>
+
+    </div>
+    <div class="footer-icons">
+        <span class="material-icons">home</span>
+        <span class="material-icons"><a href="chartbot.html">search</a></span>
+        <span class="material-icons"><a href="notification.html">notifications</a></span>
+        <span class="material-icons"><a href="onboarding.html">account_circle</a></span>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

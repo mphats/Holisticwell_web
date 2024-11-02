@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col h-screen">
+    <!-- Navigation Menu -->
+    <nav class="bg-blue-500 text-white px-4 py-2 fixed w-full top-0">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-lg font-bold"><img src="m.jpeg" alt="" class="w-10 h-10 rounded-full"></a>
+            <button id="menuToggle" class="text-white focus:outline-none lg:hidden">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div id="menuLinks" class="hidden lg:flex lg:space-x-6 mx-auto">
+                <a href="index.html" class="hover:text-blue-300">Home</a>
+                <a href="wellnessinsight.html" class="hover:text-blue-300">Wellness Insights</a>
+                <a href="activity.html" class="hover:text-blue-300">Activity Updates</a>
+                <a href="chatbot.html" class="hover:text-blue-300">Chatbot</a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Links -->
+        <div id="mobileMenu" class="hidden flex-col bg-blue-600 text-white space-y-2 px-4 lg:hidden">
+            <a href="index.html" class="block py-2">Home</a>
+            <a href="wellnessinsight.html" class="block py-2">Wellness Insights</a>
+            <a href="activity.html" class="block py-2">Activity Updates</a>
+            <a href="chatbot.html" class="block py-2">Chatbot</a>
+        </div>
+    </nav>
+
+    <!-- Chatbot Container -->
+    <div class="container mx-auto p-4 max-w-lg bg-white shadow-lg rounded-lg flex flex-col flex-grow mt-16">
+        <header class="text-center py-4 border-b">
+            <h1 class="text-2xl font-bold text-gray-700">Health Assistant Chatbot</h1>
+            <p class="text-sm text-gray-500">Ask health-related questions, get personalized advice.</p>
+        </header>
+
+        <div id="chatbox" class="flex-grow p-4 overflow-y-auto">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <footer class="p-4 border-t">
+            <form id="chatForm" class="flex">
+                <input type="text" id="userInput" placeholder="Type your question..." 
+                       class="w-full px-4 py-2 border rounded-lg focus:outline-none" required>
+                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg">Send</button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById("chatForm");
+        const userInput = document.getElementById("userInput");
+        const chatbox = document.getElementById("chatbox");
+
+        chatForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage("user", message);
+            userInput.value = "";
+
+            // Display a typing indicator for 3 seconds
+            addMessage("bot", "Typing...");
+            
+            setTimeout(async () => {
+                // Remove the typing indicator
+                chatbox.lastChild.remove();
+
+                // Fetch AI-generated response after 3 seconds
+                const response = await fetchAIResponse(message);
+                addMessage("bot", response);
+            }, 3000); // 3-second delay
+        });
+
+        // Function to fetch AI-generated response from backend
+        async function fetchAIResponse(message) {
+            try {
+                const response = await fetch("http://localhost:5000/api/chatbot", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message })
+                });
+                const result = await response.json();
+                return result.response || "I'm here to help. Could you rephrase?";
+            } catch (error) {
+                console.error("Error:", error);
+                return "I'm facing some technical difficulties. Please try again later.";
+            }
+        }
+
+        // Function to add message to chatbox with icon
+        function addMessage(sender, text) {
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `mb-4 flex items-start ${sender === "user" ? "justify-end" : "justify-start"}`;
+
+            const icon = sender === "user"
+                ? '<i class="fas fa-user-circle text-blue-500 text-2xl mr-2"></i>'
+                : '<i class="fas fa-robot text-green-500 text-2xl mr-2"></i>';
+
+            messageDiv.innerHTML = `
+                ${sender === "bot" ? icon : ""}
+                <p class="inline-block px-4 py-2 rounded-lg ${
+                    sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                }">${text}</p>
+                ${sender === "user" ? icon : ""}
+            `;
+
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+</body>
+</html>

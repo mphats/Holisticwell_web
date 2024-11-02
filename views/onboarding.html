@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding - Reminder Preferences</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="m.jpeg">
+</head>
+<body>
+    <header>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span class="material-icons">menu</span>
+        </div>
+    </header>
+
+    <!-- Settings Menu -->
+    <nav id="settings-menu" class="settings-menu">
+        <ul>
+            <li>
+                <span class="material-icons">account_circle</span>
+                <a href="profile.html">Account</a>
+            </li>
+            <li>
+                <span class="material-icons">subscriptions</span>
+                <a href="#">My Subscription</a>
+            </li>
+            <li>
+                <span class="material-icons">settings</span>
+                <a href="#">General</a>
+            </li>
+            <li>
+                <span class="material-icons">lock</span>
+                <a href="#">Privacy</a>
+            </li>
+            <li>
+                <span class="material-icons">notifications</span>
+                <a href="#">Notifications</a>
+            </li>
+            <li>
+                <span class="material-icons">insights</span>
+                <a href="#">Insights</a>
+            </li>
+            <li>
+                <span class="material-icons">analytics</span>
+                <a href="dashboard.html">Analytics</a>
+            </li>
+            <li>
+                <span class="material-icons">support</span>
+                <a href="#">Support</a>
+            </li>
+            <li>
+                <span class="material-icons">exit_to_app</span>
+                <a href="#">Sign Out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <header class="header">
+            <span class="step-indicator">3/4</span>
+        </header>
+
+        <section class="reminder-preferences">
+            <h2>Set your reminder preferences</h2>
+            <div class="preference-options">
+                <div class="preference-item">
+                    <span class="material-icons">wb_sunny</span>
+                    <p>Early morning</p>
+                </div>
+                <div class="preference-item">
+                    <span class="material-icons">brightness_6</span>
+                    <p>Midday</p>
+                </div>
+                <div class="preference-item active">
+                    <span class="material-icons">nights_stay</span>
+                    <p>Late afternoon</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="onboarding-footer">
+            <button class="skip-btn" onclick="goToHome()">Skip</button>
+            <button class="start-btn" onclick="goToHome()">Let's get started</button>
+        </footer>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.toggle('active');
+        }
+        function goToHome() {
+            window.location.href = "index.html";  // Replace with actual home page URL
+        }
+    </script>
+    
+</body>
+</html>

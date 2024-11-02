@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .neumorphic {
+            background: #e0e5ec;
+            box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Navigation Menu -->
+    <nav class="bg-blue-500 text-white px-4 py-2 fixed w-full top-0">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-lg font-bold"><img src="<%= logoImage %>" alt="Logo" class="w-10 h-10 rounded-full"></a>
+            <button id="menuToggle" class="text-white focus:outline-none lg:hidden">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div id="menuLinks" class="hidden lg:flex lg:space-x-6 mx-auto">
+                <a href="/" class="hover:text-blue-300">Home</a>
+                <a href="/wellness" class="hover:text-blue-300">Wellness Insights</a>
+                <a href="/activity" class="hover:text-blue-300">Activity Updates</a>
+                <a href="/chatbot" class="hover:text-blue-300">Chatbot</a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Links -->
+        <div id="mobileMenu" class="hidden flex-col bg-blue-600 text-white space-y-2 px-4 lg:hidden">
+            <a href="/" class="block py-2">Home</a>
+            <a href="/wellness" class="block py-2">Wellness Insights</a>
+            <a href="/activity" class="block py-2">Activity Updates</a>
+            <a href="/chatbot" class="block py-2">Chatbot</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="neumorphic p-6 rounded-3xl w-full max-w-2xl mt-20 mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-700">Wellness Dashboard</h1>
+            <div class="w-10 h-10 bg-pink-300 rounded-full flex items-center justify-center">
+                <span class="text-white text-lg font-bold">W</span>
+            </div>
+        </div>
+
+        <div class="relative mb-8 flex justify-center items-center">
+            <canvas id="wellnessChart" class="w-2/3 sm:w-1/2"></canvas>
+            <div class="absolute text-center text-gray-700 font-bold text-3xl">22</div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-8 text-center">
+            <div>
+                <p id="sleepHours" class="text-xl font-bold text-gray-700"><%= sleepHours %> hrs</p>
+                <p class="text-sm text-gray-500">SLEEP</p>
+            </div>
+            <div>
+                <p id="hydrationLevel" class="text-xl font-bold text-gray-700"><%= hydrationLevel %> L</p>
+                <p class="text-sm text-gray-500">HYDRATION</p>
+            </div>
+            <div>
+                <p id="heartRate" class="text-xl font-bold text-gray-700"><%= heartRate %> bpm</p>
+                <p class="text-sm text-gray-500">HEART RATE</p>
+            </div>
+            <div>
+                <p id="stressLevel" class="text-xl font-bold text-gray-700"><%= stressLevel %></p>
+                <p class="text-sm text-gray-500">STRESS</p>
+            </div>
+            <div>
+                <p id="mood" class="text-xl font-bold text-gray-700"><%= mood %></p>
+                <p class="text-sm text-gray-500">MOOD</p>
+            </div>
+        </div>
+
+        <h2 class="text-lg font-bold text-gray-700 mb-4">HEALTH METRICS</h2>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-pink-500 text-2xl">❤️</div>
+            </div>
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-blue-500 text-2xl font-bold">1.6 L</div>
+            </div>
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-gray-700 text-2xl font-bold">30<span class="text-sm"> min</span></div>
+            </div>
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-gray-700 text-2xl font-bold">98<span class="text-sm"> bpm</span></div>
+            </div>
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-gray-700 text-2xl font-bold">20<span class="text-sm"> min</span></div>
+            </div>
+            <div class="neumorphic rounded-full p-4 flex justify-center items-center">
+                <div class="text-gray-700 text-2xl font-bold">7<span class="text-sm"> hrs</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // Initialize chart with dynamic data from server
+        const ctx = document.getElementById('wellnessChart').getContext('2d');
+        const wellnessChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [<%= sleepHours %>, <%= stressLevel %>, <%= hydrationLevel %>], // Use server data here
+                    backgroundColor: ['#60A5FA', '#F9A8D4', '#E5E7EB'],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                cutout: '70%',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

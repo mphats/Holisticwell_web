@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Updates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Menu -->
+    <nav class="bg-blue-500 text-white px-4 py-2">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-lg font-bold">My Project</a>
+            <button id="menuToggle" class="text-white focus:outline-none lg:hidden">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div id="menuLinks" class="hidden lg:flex lg:items-center space-x-6">
+                <a href="index.html" class="hover:text-blue-300">Home</a>
+                <a href="wellnessinsight.html" class="hover:text-blue-300">Wellness Insights</a>
+                <a href="activity.html" class="hover:text-blue-300">Activity Updates</a>
+                <a href="chatbot.html" class="hover:text-blue-300">Chatbot</a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Links -->
+        <div id="mobileMenu" class="hidden flex-col bg-blue-600 text-white space-y-2 px-4 lg:hidden">
+            <a href="index.html" class="block py-2">Home</a>
+            <a href="wellnessinsight.html" class="block py-2">Wellness Insights</a>
+            <a href="activity.html" class="block py-2">Activity Updates</a>
+            <a href="chatbot.html" class="block py-2">Chatbot</a>
+        </div>
+    </nav>
+
+    <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <header class="px-4 py-3 bg-gray-50 border-b">
+            <div class="flex items-center">
+                <button class="mr-4 text-gray-600">
+                    <a href="wellnessinsight.html"><i class="fas fa-arrow-left"></i></a>
+                </button>
+                <h1 class="text-xl font-semibold text-gray-800">Activity Updates</h1>
+            </div>
+        </header>
+
+        <main class="px-4 py-2">
+            <ul id="activityList" class="divide-y divide-gray-200">
+                <!-- Activities will be injected here by JavaScript -->
+            </ul>
+        </main>
+
+        <footer class="px-4 py-3 bg-white border-t">
+            <div class="flex justify-around">
+                <button class="text-blue-500 focus:outline-none">
+                    <i class="fas fa-home text-2xl"></i>
+                </button>
+                <button class="text-gray-400 focus:outline-none">
+                    <i class="fas fa-user text-2xl"></i>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        async function fetchActivityData(userId) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/activities/user/${userId}`);
+                const result = await response.json();
+                
+                // Display activity updates
+                const activityList = document.getElementById("activityList");
+                activityList.innerHTML = ""; // Clear existing items
+    
+                result.activities.forEach(activity => {
+                    const activityItem = document.createElement("li");
+                    activityItem.className = "py-4 flex items-start space-x-3";
+                    activityItem.innerHTML = `
+                        <div class="flex-shrink-0">
+                            <img src="https://source.unsplash.com/random/50x50?${activity.activity_type}" alt="Activity" class="w-12 h-12 rounded-full object-cover">
+                        </div>
+                        <div class="flex-grow">
+                            <p class="font-medium text-gray-800">${activity.activity_type}</p>
+                            <p class="text-sm text-gray-500">${new Date(activity.activity_date).toLocaleDateString()}</p>
+                            <div class="text-sm text-gray-700 mt-2">
+                                <p><strong>Duration:</strong> ${activity.duration_minutes} mins</p>
+                                <p><strong>Calories Burned:</strong> ${activity.calories_burned}</p>
+                                <p><strong>Steps Count:</strong> ${activity.steps_count}</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-gray-600"><i class="far fa-comment"></i></button>
+                            <button class="text-gray-600"><i class="far fa-heart"></i></button>
+                        </div>
+                    `;
+                    activityList.appendChild(activityItem);
+                });
+    
+                // Show alert if exists
+                if (result.alert) {
+                    alert(result.alert);
+                }
+            } catch (error) {
+                console.error("Error fetching activity data:", error);
+            }
+        }
+    
+        // Fetch data for user ID 1 on page load
+        document.addEventListener("DOMContentLoaded", () => fetchActivityData(5));
+
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+    
+</body>
+</html>

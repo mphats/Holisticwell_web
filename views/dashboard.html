@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolisticWell Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <span class="material-icons">menu</span>
+        </div>
+    </header>
+
+    <!-- Settings Menu -->
+    <nav id="settings-menu" class="settings-menu">
+        <ul>
+            <li>
+                <span class="material-icons">account_circle</span>
+                <a href="profile.html">Account</a>
+            </li>
+            <li>
+                <span class="material-icons">subscriptions</span>
+                <a href="statistic.html">My Subscription</a>
+            </li>
+            <li>
+                <span class="material-icons">settings</span>
+                <a href="onboarding.html">General</a>
+            </li>
+            <li>
+                <span class="material-icons">lock</span>
+                <a href="#">Privacy</a>
+            </li>
+            <li>
+                <span class="material-icons">notifications</span>
+                <a href="notification.html">Notifications</a>
+            </li>
+            <li>
+                <span class="material-icons">insights</span>
+                <a href="#">Insights</a>
+            </li>
+            <li>
+                <span class="material-icons">analytics</span>
+                <a href="dashboard.html">Analytics</a>
+            </li>
+            <li>
+                <span class="material-icons">support</span>
+                <a href="#">Support</a>
+            </li>
+            <li>
+                <span class="material-icons">exit_to_app</span>
+                <a href="#">Sign Out</a>
+            </li>
+        </ul>
+    </nav>
+    
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <h1>Dashboard</h1>
+        </header>
+
+        <section class="stats-section">
+            <div class="heart-rate">
+                <h2>Heart Rate</h2>
+                <div class="heart-circle">
+                    <div class="pulse"></div>
+                    <p>72 BPM</p>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <h2>Activity Quality</h2>
+                <div class="activity-circle">
+                    <div class="pulse"></div>
+                    <p>Good</p>
+                </div>
+            </div>
+
+            <div class="real-time-data">
+                <h2>Real-time Data</h2>
+                <div class="data-cards">
+                    <div class="data-card">
+                        <p>100</p>
+                        <span>Total Activities</span>
+                    </div>
+                    <div class="data-card">
+                        <p>10,000</p>
+                        <span>Calories Burned</span>
+                    </div>
+                    <div class="data-card">
+                        <p>10</p>
+                        <span>Achievements</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <h2>Heart Rate Analytics</h2>
+            <div class="chart-container">
+                <!-- Sample graph -->
+                <div class="chart">
+                    <div class="bar" style="height: 80%;"></div>
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar" style="height: 90%;"></div>
+                    <div class="bar" style="height: 50%;"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.toggle('active');
+
+        }
+    </script>
+    <script src="chatbot.js"></script>
+
+</body>
+</html>
